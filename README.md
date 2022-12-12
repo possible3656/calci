@@ -1,16 +1,16 @@
-# calci
+# Calci
 
-A new Flutter project.
 
 ## Getting Started
+To build and run this project:
 
-This project is a starting point for a Flutter application.
+1. Get Flutter [here](https://flutter.dev) if you don't already have it
+2. Clone this repository
+3. `cd` into the repo folder
+4. run `flutter run-android` or `flutter run-ios` to build the app
 
-A few resources to get you started if this is your first Flutter project:
+(Please note that a Mac with XCode is required to build for iOS)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Contributing
+Questions, comments, suggestions, and other contributions are welcome, as this is an open-source example project and not officially maintained as part of an application or library etc. 
+ 
