@@ -11,22 +11,50 @@ class HomeView extends GetView<HomeController> {
     return Scaffold(
       backgroundColor: primaryBackgroundColor,
       body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 10),
+        padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextField(
+                    controller: controller.calculationTextController.value,
+                    cursorColor: primaryTextColor,
+                    autofocus: true,
+                    keyboardType: TextInputType.none,
+                    style: TextStyle(color: primaryTextColor, fontSize: 42),
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                    ),
+                  ),
+                  Obx(() => Text(
+                        controller.result.value,
+
+                        style: TextStyle(
+                          color: primaryTextColor,
+                          fontSize: 62,
+                        ),
+                      ),)
+                ],
+              ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
                     IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.history,
-                        color: primaryTextColor,
-                      ),
-                    ),
+                        onPressed: () => controller.showHistoryPressed(),
+                        icon: Obx(
+                          () => Icon(
+                            controller.showHistory.value
+                                ? Icons.calculate_outlined
+                                : Icons.history,
+                            color: primaryTextColor,
+                          ),
+                        ),),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: IconButton(
@@ -47,7 +75,7 @@ class HomeView extends GetView<HomeController> {
                   ],
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () => controller.onBackPressed(),
                   icon: Icon(
                     Icons.backspace_outlined,
                     color: primaryTextColor,
@@ -70,16 +98,22 @@ class HomeView extends GetView<HomeController> {
               mainAxisSpacing: 10,
               shrinkWrap: true,
               children: List.generate(20, (index) {
-                return CircleAvatar(
-                  backgroundColor: secondaryBackgroundColor,
-                  child: Text(
-                    '',
-                    style: TextStyle(color: primaryTextColor, fontSize: 22),
+                return InkWell(
+                  onTap: () => controller.onCalculatorButtonPressed(index),
+                  child: CircleAvatar(
+                    backgroundColor: secondaryBackgroundColor,
+                    child: Text(
+                      controller.calculatorModelList[index].title,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: controller.calculatorModelList[index].textColor,
+                        fontSize: 24,
+                      ),
+                    ),
                   ),
                 );
               }),
             ),
-            const SizedBox(height: 20,),
           ],
         ),
       ),
