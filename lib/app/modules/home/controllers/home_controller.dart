@@ -3,6 +3,7 @@ import 'package:calci/app/data/colors.dart';
 import 'package:calci/app/data/global_methods.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:math_expressions/math_expressions.dart';
 
 class HomeController extends GetxController {
@@ -11,10 +12,12 @@ class HomeController extends GetxController {
       TextEditingController().obs;
   RxString result = ''.obs;
   RxBool showHistory = false.obs;
+  RxBool refreshList = false.obs;
 
   @override
   void onInit() {
     addValue();
+    Constants.history.value =  GetStorage().read(Constants.historyKey)  ??[];
     super.onInit();
   }
 
@@ -112,6 +115,7 @@ class HomeController extends GetxController {
       final cm = ContextModel();
       final eval = exp.evaluate(EvaluationType.REAL, cm);
       result.value = eval.toString();
+      addToPersistance();
     } catch (e) {
       debugPrint('Please enter correct equation');
       Constants.showToast(
@@ -122,5 +126,17 @@ class HomeController extends GetxController {
 
   void showHistoryPressed() {
     showHistory.value = !showHistory.value;
+  }
+
+  void addToPersistance() {
+    Constants.history.add(calculationTextController.value.text);
+    Constants.history.add(result.value);
+    GetStorage().write(Constants.historyKey, Constants.history);
+  }
+
+  void onClearHistory() {
+    Constants.history.clear();
+    Constants.history.refresh();
+    GetStorage().write(Constants.historyKey, []);
   }
 }
