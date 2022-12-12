@@ -2,6 +2,7 @@ import 'package:calci/app/data/calculator_model.dart';
 import 'package:calci/app/data/colors.dart';
 import 'package:calci/app/data/global_methods.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:math_expressions/math_expressions.dart';
@@ -52,6 +53,7 @@ class HomeController extends GetxController {
 
   void onCalculatorButtonPressed(int index) {
     final title = calculatorModelList[index].title;
+    HapticFeedback.lightImpact();
 
     if (title == 'C') {
       clearCalculator();
@@ -72,6 +74,7 @@ class HomeController extends GetxController {
 
   void onBackPressed() {
     var currentText = calculationTextController.value.text;
+    HapticFeedback.lightImpact();
     if (currentText.isNotEmpty) {
       currentText = currentText.substring(0, currentText.length - 1);
       calculationTextController.value.text = currentText;
